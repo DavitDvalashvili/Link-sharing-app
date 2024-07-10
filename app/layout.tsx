@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const instrumentSans = Instrument_Sans({
+  weight: ["400", "700", "500"], // Specify the weights you need
+  subsets: ["latin"], // Specify the subsets you need
+});
 
 export const metadata: Metadata = {
   title: "Link sharing app",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={instrumentSans.className}>{children}</body>
     </html>
   );
 }
