@@ -12,7 +12,7 @@ export const POST = async (request: any) => {
     if (existingUser) {
       return NextResponse.json(
         { message: "User already exists" },
-        { status: 404 }
+        { status: 409 }
       );
     }
 
