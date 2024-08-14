@@ -3,3 +3,8 @@ export type iRegisterForm = {
   password: string;
   confirmPassword: string;
 };
+
+export type iLoginForm = {
+  email: string;
+  password: string;
+};

@@ -9,8 +9,7 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { iRegisterForm } from "@/Types";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -52,7 +51,7 @@ const Register = () => {
       } else {
         toast.error("Error register user");
       }
-      console.error(`Error register user: ${error.response}`);
+      console.error(`Error register user: ${error.response.data.message}`);
     }
   };
 
@@ -82,12 +81,17 @@ const Register = () => {
               Let’s get you started sharing your links!
             </p>
             <div className="text-Carbon font-normal mb-6 ">
-              <label htmlFor="email" className="text-[12px] leading-[18px]">
+              <label
+                htmlFor="email"
+                className={`text-[12px] leading-[18px] ${
+                  errors.email ? "text-Red_Orange" : "text-Carbon"
+                } `}
+              >
                 Email address
               </label>
               <div
                 className={`border-[1px] border-soli rounded-[8px] flex justify-start items-center mt-[4px] px-[16px] py-[12px] gap-[12px] ${
-                  errors.password ? "border-Red_Orange" : "border-Orochimaru"
+                  errors.email ? "border-Red_Orange" : "border-Orochimaru"
                 }`}
               >
                 <Image src={emailI} alt="email" />
@@ -102,6 +106,7 @@ const Register = () => {
                       message: "Invalid email",
                     },
                   })}
+                  autoComplete="email"
                 />
                 <span className=" text-Red_Orange text-[12px] leading-[18px] font-normal md:w-[110px] text-center">
                   {errors.email?.message}
@@ -110,7 +115,12 @@ const Register = () => {
             </div>
 
             <div className="text-Carbon font-normal mb-6">
-              <label htmlFor="password" className="text-[12px] leading-[18px]">
+              <label
+                htmlFor="password"
+                className={`text-[12px] leading-[18px] ${
+                  errors.password ? "text-Red_Orange" : "text-Carbon"
+                } `}
+              >
                 Create password
               </label>
               <div
@@ -118,7 +128,7 @@ const Register = () => {
                   errors.password ? "border-Red_Orange" : "border-Orochimaru"
                 } `}
               >
-                <Image src={passwordI} alt="email" />
+                <Image src={passwordI} alt="password" />
                 <input
                   type="password"
                   className="w-[75%] focus:outline-none"
@@ -131,6 +141,7 @@ const Register = () => {
                       message: "Invalid Password",
                     },
                   })}
+                  autoComplete="new-password"
                 />
                 {errors.password && (
                   <span className="ml-auto text-Red_Orange text-[12px] leading-[18px] font-normal md:w-[110px] text-center">
@@ -141,15 +152,22 @@ const Register = () => {
             </div>
 
             <div className="text-Carbon font-normal mb-6">
-              <label htmlFor="password" className="text-[12px] leading-[18px]">
+              <label
+                htmlFor="password"
+                className={`text-[12px] leading-[18px] ${
+                  errors.confirmPassword ? "text-Red_Orange" : "text-Carbon"
+                } `}
+              >
                 Confirm password
               </label>
               <div
                 className={`border-[1px] border-solid rounded-[8px] flex justify-start items-center px-[16px]  mt-[4px] py-[12px] gap-[12px] ${
-                  errors.password ? "border-Red_Orange" : "border-Orochimaru"
+                  errors.confirmPassword
+                    ? "border-Red_Orange"
+                    : "border-Orochimaru"
                 }`}
               >
-                <Image src={passwordI} alt="email" />
+                <Image src={passwordI} alt="password" />
                 <input
                   type="password"
                   className="w-[75%] focus:outline-none"
@@ -158,6 +176,7 @@ const Register = () => {
                     required: "Can’t be empty",
                     validate: validatePasswordRepeat,
                   })}
+                  autoComplete="new-password"
                 />
                 {errors.confirmPassword && (
                   <span className="ml-auto text-Red_Orange text-[12px] leading-[18px] font-normal md:w-[110px] text-center">
@@ -189,7 +208,6 @@ const Register = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </main>
   );
 };
